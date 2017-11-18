@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Agenda.Views.PaginaInicial" Title="Página Inicial">
+        <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="add.png" Command="{Binding IncluirCommand}"/>
+        <ToolbarItem Icon="share.png" Command="{Binding CompartilharCommand}"/>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        
+        <StackLayout Orientation="Vertical">
+            
+            <StackLayout Orientation="Horizontal">
+                <SearchBar x:Name="AgendaSearchBar" TextChanged="OnTextChanged"></SearchBar>
+            </StackLayout>
+
+            <ListView ItemsSource="{Binding Agendas}" Margin="5, 2, 5, 2"
+                      HasUnevenRows="True" ItemTapped="Agenda_ItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Image Source="profile.png"></Image>
+                                <Label Text="{Binding Nome}" FontAttributes="Bold" FontSize="18" TextColor="Black" VerticalOptions="Center"/>
+                                <Label Text="{Binding Telefone}" FontSize="15" TextColor="DarkBlue" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
