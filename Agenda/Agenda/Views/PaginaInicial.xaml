@@ -21,9 +21,11 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal">
-                                <Image Source="profile.png"></Image>
-                                <Label Text="{Binding Nome}" FontAttributes="Bold" FontSize="18" TextColor="Black" VerticalOptions="Center"/>
-                                <Label Text="{Binding Telefone}" FontSize="15" TextColor="DarkBlue" VerticalOptions="Center"/>
+                                <Image Source="profile.png" HorizontalOptions="Start" VerticalOptions="Start"></Image>
+                                <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                                    <Label Text="{Binding Nome}" FontAttributes="Bold" FontSize="18" TextColor="Black"/>
+                                </StackLayout>
+                                <Button Image="phone.png" Clicked="OnCall" BackgroundColor="Transparent" Text="{Binding Telefone}"></Button>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

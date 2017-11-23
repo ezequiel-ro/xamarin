@@ -4,27 +4,43 @@
              x:Class="Agenda.Views.MntDados" Title="Manutenção de dados">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Del" Command="{Binding DeleteCommand}"/>
-        <ToolbarItem Text="Ok" Command="{Binding OkCommand}"/>
+        <ToolbarItem Command="{Binding DeleteCommand}" Icon="remove.png"/>
+        <ToolbarItem Command="{Binding OkCommand}" Icon="disk.png"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <Grid Padding="10">
             <Grid.RowDefinitions>
+                <RowDefinition Height="300"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
-            <!-- Primeira linha: nome-->
-            <Label Grid.Row="0" Grid.Column="0" Text="Nome:" HorizontalOptions="End" VerticalOptions="Center"/>
-            <Entry Grid.Row="0" Grid.Column="1" x:Name="txtNome" Placeholder="Nome" Keyboard="Text" Text="{Binding Nome}"/>
 
-            <!-- Segunda linha: telefone-->
-            <Label Grid.Row="1" Grid.Column="0" Text="Telefone:" HorizontalOptions="End" VerticalOptions="Center"/>
-            <Entry Grid.Row="1" Grid.Column="1" x:Name="txtFone" Placeholder="Telefone" Keyboard="Text" Text="{Binding Telefone}"/>
+            <!-- Primeira linha: nome-->
+            <Image Source="profile.png" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+
+            <!-- Segunda linha: nome-->
+            <Button Grid.Row="1" Grid.Column="1" Image="camera.png"/>
+            <Button Grid.Row="1" Grid.Column="2" Image="galeria.png"/>
+
+            <!-- Terceira linha: nome-->
+            <Label Grid.Row="2" Grid.Column="0" Text="Nome:" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Entry Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtNome" Placeholder="Nome" Keyboard="Text" Text="{Binding Nome}"/>
+
+            <!-- Quarta linha: telefone-->
+            <Label Grid.Row="3" Grid.Column="0" Text="Telefone:" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Entry Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" x:Name="txtFone" Placeholder="Telefone" Keyboard="Text" Text="{Binding Telefone}"/>
+            
+            <!-- Quinta linha: compartilhar-->
+            <Label Grid.Row="4" Grid.Column="0" Text="Compartilhar:" HorizontalOptions="End" VerticalOptions="Center"/>
+            <Button Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Image="share.png" Command="{Binding shareCommand}"/>
+            
         </Grid>
     </ContentPage.Content>
 </ContentPage>

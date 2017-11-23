@@ -13,6 +13,7 @@ using Agenda.Interfaces;
 using Agenda.Droid.Implementation;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Uri = Android.Net.Uri;
 
 [assembly: Xamarin.Forms.Dependency(typeof(DeviceSpecific_Droid))]
 namespace Agenda.Droid.Implementation
@@ -44,6 +45,13 @@ namespace Agenda.Droid.Implementation
         public void CloseApplication()
         {
             Process.KillProcess(Process.MyPid());
+        }
+
+        public void fazerLigacao(string numeroTelefone)
+        {
+            var intent = new Intent(Intent.ActionCall);
+            intent.SetData(Uri.Parse("tel:" + numeroTelefone));
+            Forms.Context.StartActivity(intent);
         }
     }
 }

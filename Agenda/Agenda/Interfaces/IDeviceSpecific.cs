@@ -10,5 +10,6 @@ namespace Agenda.Interfaces
     {
         Task<bool> CompartilharDados(string titulo, string dados);
         void CloseApplication();
+        void fazerLigacao(string numeroTelefone);
     }
 }

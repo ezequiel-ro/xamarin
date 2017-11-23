@@ -67,6 +67,7 @@ namespace Agenda.Views
         public event PropertyChangedEventHandler PropertyChanged;
         public ICommand OkCommand { protected set; get; }
         public ICommand DeleteCommand { protected set; get; }
+        public ICommand shareCommand { protected set; get; }
 
         public void InformaAlteracao(string propriedade)
         {
@@ -90,6 +91,19 @@ namespace Agenda.Views
                     //encerrar tela
                     var telaInicial = Application.Current.MainPage as Views.MasterDetailPrincipal;
                     await telaInicial.PopAsync();
+                }
+            });
+
+            this.shareCommand = new Command(async () =>
+            {
+                if (ParentPage.dadosAgenda != null)
+                {
+                    string dados = ParentPage.dadosAgenda.Nome + " - " + ParentPage.dadosAgenda.Telefone;
+                    await DependencyService.Get<Interfaces.IDeviceSpecific>().CompartilharDados("Agenda Telefônica", dados);
+                }
+                else
+                {
+                    await ParentPage.DisplayAlert("Alerta", "Não foi possível compartilhar dados", "Ok");
                 }
             });
 

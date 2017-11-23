@@ -11,7 +11,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Image Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Source="login.png" Margin="70, 0, 70, 15"/>
+            <Image Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Source="agenda.png" Margin="70, 0, 70, 15"/>
             <Button Grid.Row="2" Text="Entrar com Facebook" Clicked="LoginFacebook" BackgroundColor="#3c5a98" TextColor="White" HeightRequest="35" Margin="0, 10, 0, 0"/>
         </Grid>
     </ContentPage.Content>

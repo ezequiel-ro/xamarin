@@ -87,6 +87,12 @@ namespace Agenda.Views
             var texto = AgendaSearchBar.Text;
             MostraDados(texto);
         }
+
+        private void OnCall(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            DependencyService.Get<Interfaces.IDeviceSpecific>().fazerLigacao(button.Text);
+        }
     }
 
     public class AgendaViewModel : INotifyPropertyChanged
@@ -112,7 +118,7 @@ namespace Agenda.Views
                 await telaInicial.PushAsync(new MntDados());
             });
 
-            this.CompartilharCommand = new Command(async () => 
+            this.CompartilharCommand = new Command(async () =>
             {
                 //Compartilhar dados da agenda
                 string dados = string.Empty;
