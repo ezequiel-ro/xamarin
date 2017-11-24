@@ -33,9 +33,16 @@ namespace Agenda.Views
             {
                 viewModel.Nome = agenda.Nome;
                 viewModel.Telefone = agenda.Telefone;
+                viewModel.Imagem = agenda.Imagem;
 
                 viewModel.InformaAlteracao("Nome");
                 viewModel.InformaAlteracao("Telefone");
+                viewModel.InformaAlteracao("Imagem");
+            }
+            else
+            {
+                viewModel.Imagem = "profile.png";
+                viewModel.InformaAlteracao("Imagem");
             }
         }
 
@@ -113,7 +120,6 @@ namespace Agenda.Views
 
         public DadosViewModel(MntDados pai)
         {
-            Imagem = "/storage/emulated/0/Android/data/com.companyname.Agenda/files/Pictures/MinhaFoto_5.jpg";
             ParentPage = pai;
             this.OkCommand = new Command(async () =>
             {
@@ -121,7 +127,7 @@ namespace Agenda.Views
                 if (ParentPage.DadosOk())
                 {
                     //atualizar lista de eventos da aplicação, avisando janela pai que dados foram alterados
-                    Models.AgendaModel novo = new Models.AgendaModel(0, Nome, Telefone);
+                    Models.AgendaModel novo = new Models.AgendaModel(0, Nome, Telefone, Imagem);
                     if (ParentPage.dadosAgenda != null)
                         novo.Id = ParentPage.dadosAgenda.Id;
                     MessagingCenter.Send<Application, Models.AgendaModel>(App.Current, "MntDados", novo);

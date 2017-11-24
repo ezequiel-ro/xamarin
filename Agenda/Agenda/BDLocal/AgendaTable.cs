@@ -20,6 +20,9 @@ namespace Agenda.BDLocal
         [MaxLength(15), Column("telefone")]
         public string Telefone { get; set; }
 
+        [Column("imagem")]
+        public string Imagem { get; set; }
+
         static public List<AgendaModel> GetTelefones()
         {
             try
@@ -36,7 +39,7 @@ namespace Agenda.BDLocal
                 List<AgendaModel> lstModel = new List<AgendaModel>();
                 foreach (AgendaTable a in lst)
                 {
-                    novo = new AgendaModel(a.Id, a.Nome, a.Telefone);
+                    novo = new AgendaModel(a.Id, a.Nome, a.Telefone, a.Imagem);
                     lstModel.Add(novo);
                 }
 
@@ -51,7 +54,7 @@ namespace Agenda.BDLocal
             }
         }
 
-        static public bool InsertUpdateDados(int id, string nome, string fone)
+        static public bool InsertUpdateDados(int id, string nome, string fone, string imagem)
         {
             try
             {
@@ -59,6 +62,7 @@ namespace Agenda.BDLocal
                 ag.Id = id;
                 ag.Nome = nome;
                 ag.Telefone = fone;
+                ag.Imagem = imagem;
 
                 if (id == 0)
                     App.BDLocal.DBConnection.Insert(ag);

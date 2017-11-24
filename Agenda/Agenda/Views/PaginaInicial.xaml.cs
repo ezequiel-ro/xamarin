@@ -8,9 +8,8 @@ using System.ComponentModel;
 using Agenda.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.Collections.ObjectModel;
 using System.Windows.Input;
-
+using System.Collections.ObjectModel;
 
 namespace Agenda.Views
 {
@@ -32,7 +31,7 @@ namespace Agenda.Views
             MessagingCenter.Subscribe<Application, Models.AgendaModel>(this, "MntDados", (sender, arg) =>
             {
                 //atualiza dados no banco de dados local
-                AgendaTable.InsertUpdateDados(arg.Id, arg.Nome, arg.Telefone);
+                AgendaTable.InsertUpdateDados(arg.Id, arg.Nome, arg.Telefone, arg.Imagem);
 
                 //atualiza lista
                 MostraDados(null);
@@ -80,6 +79,7 @@ namespace Agenda.Views
             viewModel.InformaAlteracao("Agendas");
             viewModel.InformaAlteracao("Nome");
             viewModel.InformaAlteracao("Telefone");
+            viewModel.InformaAlteracao("Imagem");
         }
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
