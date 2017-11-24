@@ -31,7 +31,7 @@ namespace Agenda
             localDataBase = new BancoLocal();
 
             //página inicial da aplicação(com barra de navegação) e login no facebook
-            /*Views.Login pagInicial = new Views.Login();
+            Views.Login pagInicial = new Views.Login();
             MainPage = new NavigationPage(pagInicial)
             {
                 BarBackgroundColor = Color.DarkSeaGreen,
@@ -40,11 +40,11 @@ namespace Agenda
 
             NavigationPage.SetBackButtonTitle(MainPage, "");
             NavigationPage.SetHasBackButton(MainPage, true);
-            myApp = this;*/
+            myApp = this;
 
             //Página principal sem o login do facebook
-            var telaInicial = new Views.MasterDetailPrincipal();
-            Application.Current.MainPage = telaInicial;
+            /*var telaInicial = new Views.MasterDetailPrincipal();
+            Application.Current.MainPage = telaInicial;*/
         }
     }
 }
