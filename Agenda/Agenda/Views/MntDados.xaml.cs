@@ -8,21 +8,23 @@ using System.Windows.Input;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 
 namespace Agenda.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class MntDados : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class MntDados : ContentPage
+    {
         private DadosViewModel viewModel;
         public Models.AgendaModel dadosAgenda;
 
-		public MntDados (Models.AgendaModel agenda = null)
-		{
+        public MntDados(Models.AgendaModel agenda = null)
+        {
             //salva dados corrente
             dadosAgenda = agenda;
 
-			InitializeComponent ();
+            InitializeComponent();
             viewModel = new DadosViewModel(this);
             this.BindingContext = viewModel;
 
@@ -35,7 +37,7 @@ namespace Agenda.Views
                 viewModel.InformaAlteracao("Nome");
                 viewModel.InformaAlteracao("Telefone");
             }
-		}
+        }
 
         public bool DadosOk()
         {
@@ -53,14 +55,49 @@ namespace Agenda.Views
                 return false;
             }
 
+            if (string.IsNullOrEmpty(viewModel.Imagem))
+            {
+                DisplayAlert("Erro", "Imagem não foi informada", "Ok");
+                txtFone.Focus();
+                return false;
+            }
+
             return true;
         }
-	}
+
+        private async void tirarFoto_clicked(object sender, EventArgs e)
+        {
+            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+            {
+                await DisplayAlert("Nenhuma Câmera", "Nenhuma Câmera disponível.", "OK");
+                return;
+            }
+
+            var armazenamento = new StoreCameraMediaOptions()
+            {
+                SaveToAlbum = true,
+                Name = "MinhaFoto.jpg"
+            };
+            var foto = await CrossMedia.Current.TakePhotoAsync(armazenamento);
+            viewModel.Imagem = foto.Path;
+            viewModel.InformaAlteracao("Imagem");
+            if (foto == null)
+                return;
+
+            imgFoto.Source = ImageSource.FromStream(() =>
+            {
+                var stream = foto.GetStream();
+                foto.Dispose();
+                return stream;
+            });
+        }
+    }
 
     public class DadosViewModel : INotifyPropertyChanged
     {
         public string Nome { get; set; }
         public string Telefone { get; set; }
+        public string Imagem { get; set; }
 
         public MntDados ParentPage { get; set; }
 
@@ -76,6 +113,7 @@ namespace Agenda.Views
 
         public DadosViewModel(MntDados pai)
         {
+            Imagem = "/storage/emulated/0/Android/data/com.companyname.Agenda/files/Pictures/MinhaFoto_5.jpg";
             ParentPage = pai;
             this.OkCommand = new Command(async () =>
             {
@@ -91,19 +129,6 @@ namespace Agenda.Views
                     //encerrar tela
                     var telaInicial = Application.Current.MainPage as Views.MasterDetailPrincipal;
                     await telaInicial.PopAsync();
-                }
-            });
-
-            this.shareCommand = new Command(async () =>
-            {
-                if (ParentPage.dadosAgenda != null)
-                {
-                    string dados = ParentPage.dadosAgenda.Nome + " - " + ParentPage.dadosAgenda.Telefone;
-                    await DependencyService.Get<Interfaces.IDeviceSpecific>().CompartilharDados("Agenda Telefônica", dados);
-                }
-                else
-                {
-                    await ParentPage.DisplayAlert("Alerta", "Não foi possível compartilhar dados", "Ok");
                 }
             });
 
@@ -123,7 +148,19 @@ namespace Agenda.Views
                         await telaInicial.PopAsync();
                     }
                 }
+            });
 
+            this.shareCommand = new Command(async () =>
+            {
+                if (ParentPage.dadosAgenda != null)
+                {
+                    string dados = ParentPage.dadosAgenda.Nome + " - " + ParentPage.dadosAgenda.Telefone;
+                    await DependencyService.Get<Interfaces.IDeviceSpecific>().CompartilharDados("Agenda Telefônica", dados);
+                }
+                else
+                {
+                    await ParentPage.DisplayAlert("Alerta", "Não foi possível compartilhar dados", "Ok");
+                }
             });
         }
     }

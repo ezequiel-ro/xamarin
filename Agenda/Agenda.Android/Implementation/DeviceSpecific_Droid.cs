@@ -14,6 +14,8 @@ using Agenda.Droid.Implementation;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Uri = Android.Net.Uri;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 
 [assembly: Xamarin.Forms.Dependency(typeof(DeviceSpecific_Droid))]
 namespace Agenda.Droid.Implementation
@@ -52,6 +54,6 @@ namespace Agenda.Droid.Implementation
             var intent = new Intent(Intent.ActionCall);
             intent.SetData(Uri.Parse("tel:" + numeroTelefone));
             Forms.Context.StartActivity(intent);
-        }
+        }        
     }
 }
